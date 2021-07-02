@@ -1,4 +1,4 @@
-# Generate screenshots of BPMN Diagram rendering  for various `bpmn-visualization` versions
+# Generate screenshots of BPMN Diagram rendering for various `bpmn-visualization` versions
 
 Pages are available for most bpmn-visualization versions. They load reference diagrams from the master branch of the
 [bpmn-miwg-test-suite](https://github.com/bpmn-miwg/bpmn-miwg-test-suite) repository on page load.
@@ -8,7 +8,8 @@ screenshots.
 **NOTES**:
 * currently, only retrieve the `B.2.0` file (could be passed as url parameter)
 * this is a first implementation, a lot of things could be improved (script robustness, html elements waiting conditions, code duplication, ...)
-* the resources used
+* the resources used for bpmn-visualization until version 0.3.0 (including) are taken from the history of the bpmn-visualization-examples
+repository
 
 
 ## How to do the screenshots generation
@@ -50,7 +51,7 @@ Improve the GIF (with https://ezgif.com/)
   * compression: 35
 
 
-## Resources details
+## Resource details
 
 Custom html page have been created to use bpmn-visualization
 * the IIFE bundle is used when available. It is retrieved from a CDN exposing npm package bundles.
