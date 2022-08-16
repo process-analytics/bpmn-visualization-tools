@@ -2,7 +2,7 @@
 const fse = require('fs-extra');
 const outputDirectory = 'build/screenshots';
 
-//console.info('Building bpmn-visualization html documentation');
+console.info('Generating screenshots for B.2.0 rendering with various bpmn-visualization versions');
 
 // clean existing screenshots
 fse.removeSync(outputDirectory);
@@ -14,8 +14,6 @@ fse.ensureDirSync(outputDirectory);
 
 // Notice a proper package name in require
 const {chromium} = require('playwright-chromium');
-
-// TODO for each version, access the page, wait for load, do a screenshot, save it as a file
 
 (async () => {
   const browser = await chromium.launch({headless: false});
@@ -41,7 +39,7 @@ const {chromium} = require('playwright-chromium');
     counter++;
 
     // TODO choose the miwg-test-suite file to load by passing a query parameter
-    await page.goto(`http://localhost:8002/tools/version-comparator/resources/${version}/index.html`);
+    await page.goto(`http://localhost:8002/resources/${version}/index.html`);
     // TODO check that the title matches the version?
     const title = await page.title();
     console.info('page title', title);
@@ -55,6 +53,7 @@ const {chromium} = require('playwright-chromium');
     console.info('Wait done');
 
     const countValue = String(counter).padStart(2, '0')
+    // https://playwright.dev/docs/screenshots
     await page.screenshot({ path: `${outputDirectory}/B.2.0-${countValue}-${version}.png` });
   }
 
@@ -62,5 +61,3 @@ const {chromium} = require('playwright-chromium');
   await browser.close();
   process.exit(0);
 })();
-
-// https://playwright.dev/docs/screenshots

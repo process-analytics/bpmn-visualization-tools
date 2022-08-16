@@ -1,9 +1,8 @@
 # Generate screenshots of BPMN Diagram rendering for various `bpmn-visualization` versions
 
-Pages are available for most bpmn-visualization versions. They load reference diagrams from the master branch of the
-[bpmn-miwg-test-suite](https://github.com/bpmn-miwg/bpmn-miwg-test-suite) repository on page load.
-A nodejs script can generate screenshot thanks to a playwright script. It opens the pages in a Chromium browser and takes
-screenshots.
+![B.2.0 rendering evolutions](docs/B.2.0_rendering_evolution_0.1.0_to_0.10.0.gif)  
+_B.2.0 rendering evolutions with `bpmn-visualization` from version 0.1.0 to 0.10.0 as shown in the [bpmn-visualization 1st anniversary article](https://dev.to/process-analytics/the-bpmn-visualization-project-celebrates-its-1st-anniversary-4ae2)_
+
 
 **NOTES**:
 * currently, only retrieve the `B.2.0` file (could be passed as url parameter)
@@ -11,8 +10,22 @@ screenshots.
 * the resources used for bpmn-visualization until version 0.3.0 (including) are taken from the history of the bpmn-visualization-examples
 repository
 
+## How it works
+
+Pages are available for most `bpmn-visualization` versions. They load reference diagrams from the master branch of the
+[bpmn-miwg-test-suite](https://github.com/bpmn-miwg/bpmn-miwg-test-suite) repository on page load.
+A nodejs script can generate screenshot thanks to a playwright script. It opens the pages in a Chromium browser and takes
+screenshots.
 
 ## How to do the screenshots generation
+
+### Prerequisites
+
+Node 16
+
+Run `npm install`
+
+### How-to
 
 Start a http server on port `8002`, for instance, by running one of the following commands
 - `python3 -m http.server 8002`
@@ -53,7 +66,7 @@ Improve the GIF (with https://ezgif.com/)
 
 ## Resource details
 
-Custom html page have been created to use bpmn-visualization
+Custom html page have been created to use `bpmn-visualization`
 * the IIFE bundle is used when available. It is retrieved from a CDN exposing npm package bundles.
 * otherwise, we used the demo bundle/packaging, and custom code to make the integration work
 
