@@ -1,0 +1,16 @@
+name: Check Pull Request Metadata
+on:
+  pull_request:
+    types:
+      - opened
+      - edited
+      - reopened
+jobs:
+  pr-enforce-conventional-commits:
+    runs-on: ubuntu-22.04
+    steps:
+      - name: Check pull request title
+        uses: jef/conventional-commits-pr-action@v1
+        with:
+          token: ${{ secrets.GITHUB_TOKEN }}
+          comment: false # Post a comment in the pull request conversation with examples.
