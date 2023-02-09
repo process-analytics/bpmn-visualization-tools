@@ -21,3 +21,10 @@ docker run fathyb/html2svg https://cdn.statically.io/gh/process-analytics/bpmn-v
 svg > monitoring.svg
 ```
 
+### post process
+
+in the future, it may be possible ti only export a dedicated html element.
+See https://github.com/fathyb/html2svg/issues/27
+
+todo find an esitor which is able to read the content of the exported svg.
+doesn't wirk with inkscape 1.2 on ubuntu 20.
