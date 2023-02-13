@@ -21,10 +21,19 @@ docker run fathyb/html2svg https://cdn.statically.io/gh/process-analytics/bpmn-v
 svg > monitoring.svg
 ```
 
-### post process
+### Post-process
 
-in the future, it may be possible ti only export a dedicated html element.
-See https://github.com/fathyb/html2svg/issues/27
+The visible part or the whole page have been exported as an SVG file. We need to crop the content to only keep the releavant part of the demo.
 
-todo find an esitor which is able to read the content of the exported svg.
-doesn't wirk with inkscape 1.2 on ubuntu 20.
+In the future, it may be possible to only export a dedicated html element. See https://github.com/fathyb/html2svg/issues/27
+
+**TODO** find an editor which is able to read the content of the exported svg.
+- On ubuntu 20, the svg files seem empty when opening them with inkscape 1.2 or the default Images Viewer.
+
+
+#### Final optimization of the SVG file
+
+Optimize the SVG content with svggo, for instance by using
+May be also available in html2svg in the future, see https://github.com/fathyb/html2svg/issues/5
+
+
