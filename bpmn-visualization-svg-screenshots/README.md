@@ -33,7 +33,6 @@ In the future, it may be possible to only export a dedicated html element. See h
 
 #### Final optimization of the SVG file
 
-Optimize the SVG content with svggo, for instance by using
+Optimize the SVG content with svggo, for instance by using https://jakearchibald.github.io/svgomg/.
+
 May be also available in html2svg in the future, see https://github.com/fathyb/html2svg/issues/5
-
-
