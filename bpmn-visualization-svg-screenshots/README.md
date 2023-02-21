@@ -21,6 +21,11 @@ docker run fathyb/html2svg https://cdn.statically.io/gh/process-analytics/bpmn-v
 svg > monitoring.svg
 ```
 
+Don't forget to put the URL between quotes if it contains query parameters:
+```bash
+docker run fathyb/html2svg "https://cdn.statically.io/gh/process-analytics/bpmn-visualization-examples/070cfc9/demo/monitoring-all-process-instances/index.html?useCase=frequency&dataType=both" --format svg > monitoring.svg
+```
+
 ### Post-process
 
 The visible part or the whole page have been exported as an SVG file. We need to crop the content to only keep the releavant part of the demo.
