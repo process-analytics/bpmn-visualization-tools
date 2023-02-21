@@ -2,9 +2,9 @@
 
 ## Context
 
-SVG instead of PNG (or other raster images): vectorial better rendering than regular images. For example, in the PA website. 
+Why using SVG instead of PNG (or other raster images)? Vectorial images offer better rendering than regular images. For example, for the PA website. 
 
-bpmn-visualization
+`bpmn-visualization`
   - SVG exporter: partially implemented, not fully working (overlays are misplaced). Only available in the code of the
   demo provided by the library (no API).
   - extract manually the SVG definition from the DOM: text are not correctly positioned. This is because we currently (v0.30.0)
@@ -32,8 +32,12 @@ The visible part or the whole page have been exported as an SVG file. We need to
 
 In the future, it may be possible to only export a dedicated html element. See https://github.com/fathyb/html2svg/issues/27
 
-**TODO** find an editor which is able to read the content of the exported svg.
+**TODO** find an editor which is able to read the content of the exported SVG.
 - On ubuntu 20, the svg files seem empty when opening them with inkscape 1.2 or the default Images Viewer.
+
+Workaround
+- update the content of the page to only keep the part you want to export as an SVG image. This is what was done in [PA website #899](https://github.com/process-analytics/process-analytics.dev/pull/899).
+
 
 
 #### Final optimization of the SVG file
