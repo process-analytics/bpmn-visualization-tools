@@ -12,7 +12,7 @@
     "generate-screenshots": "ts-node --esm scripts/generate-screenshots.ts"
   },
   "dependencies": {
-    "bpmn-visualization": "0.25.2"
+    "bpmn-visualization": "0.35.0"
   },
   "devDependencies": {
     "playwright-chromium": "~1.25.0",

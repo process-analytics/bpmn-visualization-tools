@@ -1,7 +1,7 @@
 import './style.css'
 import {BpmnVisualization, FitType} from "bpmn-visualization";
 
-const bpmnVisualization = new BpmnVisualization({container: 'bpmn-container'});
+const bpmnVisualization = new BpmnVisualization({container: 'bpmn-container', renderer: {ignoreBpmnColors: false}});
 
 const fetchBpmnContent = (url: string) => fetch(url)
     .then(response => {
