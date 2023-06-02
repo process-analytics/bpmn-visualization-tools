@@ -6,6 +6,9 @@ Node: 16
 
 Run `npm install`
 
+Test the dev server
+- run `npm run dev`
+- open http://localhost:5173/?bpmnFileName=C.1.0. The `bpmnFileName` query parameter is used to load any BPMN diagram available in the `public` directory.
 
 ## How-to use
 
