@@ -1,5 +1,22 @@
 # Generate screenshots of BPMN Diagram from migw-test-suite with `bpmn-visualization`
 
+## Purpose
+
+This tools helps in preparing the `bpmn-visualization` submission to https://github.com/bpmn-miwg/bpmn-miwg-test-suite/, to demonstrate
+how it renders the Reference diagrams.
+
+The screenshots shows the "BPMN in Color" support of `bpmn-visualization` that has been introduced in version 0.35.0.
+
+
+### Submission process
+
+Everything is explained in https://github.com/bpmn-miwg/bpmn-miwg-test-suite/#how-to-test-a-bpmn-tool-using-this-test-suite.
+
+Use this tools to prepare the required resources prior creating a Pull Request.
+
+Think about automating if we submit often.
+
+
 ## Install
 
 Node: 16
