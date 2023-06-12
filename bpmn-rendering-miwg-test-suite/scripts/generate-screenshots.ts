@@ -17,6 +17,16 @@
 import * as fs from 'node:fs';
 import {chromium} from 'playwright-chromium';
 
+type Configuration = {
+    /**
+     * Number of diagrams in the file that needs to be exported.
+     * Currently, only export the first one and postfix the screenshot file name with a number.
+     * It will change with https://github.com/process-analytics/bpmn-visualization-js/issues/729
+     **/
+    diagramsNumber?: number;
+    viewport?: { width: number, height: number }
+}
+
 
 // TODO lot of things are duplicated with the 'version-to-version' tool
 const outputDirectory = 'build/screenshots';
@@ -29,13 +39,15 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // TODO temp to configure the viewport for each file
-const diagrams = ['A.1.0', 'B.2.0', 'C.8.0'];
+const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
 // TODO we currently use an arbitrary load configuration for fit. See if we need to configure it for each file and diagram
 // TODO for files that contain several diagrams, need to list diagram index, dedicated viewport
-const configuration = new Map([
+const configuration = new Map<string, Configuration>([
     ['B.2.0', {viewport: { width: 2078, height: 1616 }}],
+    ['C.4.0', {diagramsNumber: 4}],
+    ['C.5.0', {diagramsNumber: 2}],
 ]);
 
 const baseUrl = 'localhost:5173/index.html';
@@ -50,7 +62,8 @@ const defaultViewPort = { width: 1280, height: 720 };
     for (const fileName of diagrams) {
         console.info('Processing file', fileName);
 
-        const viewPort = configuration.get(fileName)?.viewport ?? defaultViewPort;
+        const diagramConfiguration = configuration.get(fileName);
+        const viewPort = diagramConfiguration?.viewport ?? defaultViewPort;
         console.info('viewport:', viewPort);
         await page.setViewportSize(viewPort);
 
@@ -68,7 +81,9 @@ const defaultViewPort = { width: 1280, height: 720 };
         // https://playwright.dev/docs/screenshots
         // TODO ensure no fullPage, configure css to make fitCenter work or configure viewport for each file
         // TODO when several bpmn diagram in a file, the file name must be prefix by '.<number>'
-        await page.screenshot({path: `${outputDirectory}/${fileName}-import.png`, fullPage: true});
+        const screenshotFileNamePostfix = diagramConfiguration?.diagramsNumber ? '-1' : '';
+        await page.screenshot({path: `${outputDirectory}/${fileName}-import${screenshotFileNamePostfix}.png`, fullPage: true});
+        console.info(`Screenshot generated for ${fileName}`);
         // TODO decide if we use need to use 'locator'
         // await page.locator('#bpmn-container').screenshot({path: `${outputDirectory}/${fileName}-import-1-alternative.png`});
     }
