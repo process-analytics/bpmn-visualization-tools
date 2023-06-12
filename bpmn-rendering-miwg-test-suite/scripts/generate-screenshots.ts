@@ -45,7 +45,7 @@ const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 // TODO we currently use an arbitrary load configuration for fit. See if we need to configure it for each file and diagram
 // TODO for files that contain several diagrams, need to list diagram index, dedicated viewport
 const configuration = new Map<string, Configuration>([
-    ['B.2.0', {viewport: { width: 2078, height: 1616 }}],
+    ['B.2.0', {viewport: {width: 2078, height: 1616}}],
     ['C.4.0', {diagramsNumber: 4}],
     ['C.5.0', {diagramsNumber: 2}],
 ]);
@@ -81,7 +81,7 @@ const defaultViewPort = { width: 1280, height: 720 };
         // https://playwright.dev/docs/screenshots
         // TODO ensure no fullPage, configure css to make fitCenter work or configure viewport for each file
         // TODO when several bpmn diagram in a file, the file name must be prefix by '.<number>'
-        const screenshotFileNamePostfix = diagramConfiguration?.diagramsNumber ? '-1' : '';
+        const screenshotFileNamePostfix = diagramConfiguration?.diagramsNumber ? '.1' : '';
         await page.screenshot({path: `${outputDirectory}/${fileName}-import${screenshotFileNamePostfix}.png`, fullPage: true});
         console.info(`Screenshot generated for ${fileName}`);
         // TODO decide if we use need to use 'locator'
