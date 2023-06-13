@@ -41,6 +41,7 @@ const diagrams = fs.readdirSync('public')
 // Use this to check a dedicated diagram
 // const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
+const diagrams = ['B.2.0'];
 
 // configuration stores viewport
 const configuration = new Map<string, Configuration>([
@@ -58,14 +59,24 @@ const configuration = new Map<string, Configuration>([
     ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.6.0', {viewport: {width: 2081, height: 942}}],
     // ['C.7.0', {}], // no need for config
-    ['C.8.0', {viewport: {width: 2158, height: 850}}],
-    ['C.8.1', {viewport: {width: 1920, height: 800}}],
+    ['C.8.0', {
+        checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9X', // Collapsed Call Activity
+        viewport: {width: 2158, height: 850}}],
+    ['C.8.1', {viewport: {width: 1920, height: 800}
+    }],
 ]);
 
 const baseUrl = 'localhost:5173/index.html';
 
 // playwright default
 const defaultViewPort = { width: 1280, height: 720 };
+
+
+// private findSvgElement(bpmnId: string): HTMLElement {
+//     const bpmnElements = this.bpmnVisualization.bpmnElementsRegistry.getElementsByIds(bpmnId);
+//     return bpmnElements.length == 0 ? undefined : bpmnElements[0].htmlElement;
+// }
+
 
 (async () => {
     const browser = await chromium.launch({headless: false});
@@ -76,6 +87,8 @@ const defaultViewPort = { width: 1280, height: 720 };
 
         const diagramConfiguration = configuration.get(fileName);
         const viewPort = diagramConfiguration?.viewport ?? defaultViewPort;
+        const fileConfiguration = configuration.get(fileName);
+        const viewPort = fileConfiguration?.viewport ?? defaultViewPort;
         console.info('viewport:', viewPort);
         await page.setViewportSize(viewPort);
 
@@ -87,6 +100,20 @@ const defaultViewPort = { width: 1280, height: 720 };
         // we could at least check mxgraph initialization or check the existence of a specific BPMN SVG nodes by looking for its related data-bpmn-id
         await page.waitForTimeout(1000);
         console.info('Wait done');
+        // TODO wait for generated element instead of waiting for 1 second (risk of flaky generation, see https://playwright.dev/docs/api/class-page#pagewaitfortimeouttimeout)
+        // we do this in tests (for specific elements, this require data attribute that are not available in all versions or the attribute name changes from version to version
+        // we could at least check mxgraph initialization (svg node in the bpmn-container, but it may not have the same id in all pages)
+        // or check the existence of bpmn svg nodes (probably the easiest way as they will be present for all versions)
+        const checkedBpmnElementId = fileConfiguration?.checkedBpmnElementId;
+        console.info(`Waiting for diagram rendering, expected BPMN element '${checkedBpmnElementId}' to be present...`);
+        // TODO the 2nd group is not empty (should also be checked in the other tool)
+        // #bpmn-container > svg:nth-child(1) > g:nth-child(1) > g:nth-child(2)
+        // TODO this doesn't do a check, test "pw test library" with expect
+        // await expect(page.locator..).toBeVisible()
+        await page.locator(`#bpmn-container svg2 g g:nth-child(2) g[data-bpmn-id=${checkedBpmnElementId}]`);
+        // await page.waitForTimeout(1000);
+        // console.info('Wait done');
+        console.info('Found BPMN element');
 
         // https://playwright.dev/docs/screenshots
         // TODO ensure no fullPage, configure css to make fitCenter work or configure viewport for each file
