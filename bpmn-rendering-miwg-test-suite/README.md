@@ -19,7 +19,7 @@ Think about automating if we submit often.
 
 ## Install
 
-Node: 16
+Node: see [.nvmrc](./.nvmrc). nvm users can run `nvm use`.
 
 Run `npm install`
 
