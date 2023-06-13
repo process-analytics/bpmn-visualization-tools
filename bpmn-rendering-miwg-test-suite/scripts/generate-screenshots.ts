@@ -39,7 +39,7 @@ const diagrams = fs.readdirSync('public')
     .filter(file => file.endsWith('.bpmn'))
     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-// const diagrams = ['C.8.1'];
+// const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -50,7 +50,7 @@ const configuration = new Map<string, Configuration>([
     ['A.4.0', {viewport: {width: 1222, height: 807}}],
     ['A.4.1', {viewport: {width: 1284, height: 1037}}],
     ['B.1.0', {viewport: {width: 1103, height: 1011}}],
-    ['B.2.0', {viewport: {width: 1284, height: 942}}],
+    ['B.2.0', {viewport: {width: 1926, height: 1413}}],
     // ['C.1.0', {}], // no need for config
     // ['C.2.0', {}], // no need for config
     // ['C.3.0', {}], // no need for config
