@@ -69,12 +69,10 @@ const defaultViewPort = { width: 1280, height: 720 };
 
         await page.goto(`${baseUrl}?bpmnFileName=${fileName}`);
 
-        // TODO wait for generated element instead of waiting for 1 second (risk of flaky generation, see https://playwright.dev/docs/api/class-page#pagewaitfortimeouttimeout)
-        // we do this in tests (for specific elements, this require data attribute that are not available in all versions or the attribute name changes from version to version
-        // we could at least check mxgraph initialization (svg node in the bpmn-container, but it may not have the same id in all pages)
-        // or check the existence of bpmn svg nodes (probably the easiest way as they will be present for all versions)
         console.info('Waiting for diagram rendering...');
-        // TODO the 2nd group is not empty (should also be checked in the other tool)
+        // TODO wait for generated element instead of waiting for 1 second (risk of flaky generation, see https://playwright.dev/docs/api/class-page#pagewaitfortimeouttimeout)
+        // we do this in bpmn-visualization tests
+        // we could at least check mxgraph initialization or check the existence of a specific BPMN SVG nodes by looking for its related data-bpmn-id
         await page.waitForTimeout(1000);
         console.info('Wait done');
 
