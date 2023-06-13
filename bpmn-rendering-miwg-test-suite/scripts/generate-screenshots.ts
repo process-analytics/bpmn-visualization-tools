@@ -19,6 +19,10 @@ import {chromium} from 'playwright-chromium';
 
 type Configuration = {
     /**
+     * The id of the BPMN element present in the diagram that is used to detect that the diagram has been rendered.
+     */
+    checkedBpmnElementId?: string;
+    /**
      * Number of diagrams in the file that needs to be exported.
      * Currently, only export the first one and postfix the screenshot file name with a number.
      * It will change with https://github.com/process-analytics/bpmn-visualization-js/issues/729
@@ -42,6 +46,13 @@ const diagrams = fs.readdirSync('public')
 // const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
+
+// ['B.2.0', {
+//     checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9X', // Collapsed Call Activity
+//     viewport: {width: 2078, height: 1616}
+// }],
+
+
 // configuration stores viewport
 const configuration = new Map<string, Configuration>([
     ['A.1.0', {viewport: {width: 771, height: 111}}],
@@ -50,7 +61,11 @@ const configuration = new Map<string, Configuration>([
     ['A.4.0', {viewport: {width: 1222, height: 807}}],
     ['A.4.1', {viewport: {width: 1284, height: 1037}}],
     ['B.1.0', {viewport: {width: 1103, height: 1011}}],
-    ['B.2.0', {viewport: {width: 1926, height: 1413}}],
+    ['B.2.0', {
+        // TODO this should fail (added an 'X' character at the end of the id)
+        checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9X', // Collapsed Call Activity
+        viewport: {width: 1926, height: 1413}
+    }],
     // ['C.1.0', {}], // no need for config
     // ['C.2.0', {}], // no need for config
     // ['C.3.0', {}], // no need for config
@@ -58,9 +73,7 @@ const configuration = new Map<string, Configuration>([
     ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.6.0', {viewport: {width: 2081, height: 942}}],
     // ['C.7.0', {}], // no need for config
-    ['C.8.0', {
-        checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9X', // Collapsed Call Activity
-        viewport: {width: 2158, height: 850}}],
+    ['C.8.0', {viewport: {width: 2158, height: 850}}],
     ['C.8.1', {viewport: {width: 1920, height: 800}
     }],
 ]);
