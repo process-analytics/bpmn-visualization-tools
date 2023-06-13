@@ -47,12 +47,6 @@ const diagrams = fs.readdirSync('public')
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 
-// ['B.2.0', {
-//     checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9X', // Collapsed Call Activity
-//     viewport: {width: 2078, height: 1616}
-// }],
-
-
 // configuration stores viewport
 const configuration = new Map<string, Configuration>([
     ['A.1.0', {viewport: {width: 771, height: 111}}],
@@ -74,8 +68,7 @@ const configuration = new Map<string, Configuration>([
     ['C.6.0', {viewport: {width: 2081, height: 942}}],
     // ['C.7.0', {}], // no need for config
     ['C.8.0', {viewport: {width: 2158, height: 850}}],
-    ['C.8.1', {viewport: {width: 1920, height: 800}
-    }],
+    ['C.8.1', {viewport: {width: 1920, height: 800}}],
 ]);
 
 const baseUrl = 'localhost:5173/index.html';
