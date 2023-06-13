@@ -41,7 +41,6 @@ const diagrams = fs.readdirSync('public')
 // Use this to check a dedicated diagram
 // const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
-const diagrams = ['B.2.0'];
 
 // configuration stores viewport
 const configuration = new Map<string, Configuration>([
@@ -87,24 +86,12 @@ const defaultViewPort = { width: 1280, height: 720 };
 
         const diagramConfiguration = configuration.get(fileName);
         const viewPort = diagramConfiguration?.viewport ?? defaultViewPort;
-        const fileConfiguration = configuration.get(fileName);
-        const viewPort = fileConfiguration?.viewport ?? defaultViewPort;
         console.info('viewport:', viewPort);
         await page.setViewportSize(viewPort);
 
         await page.goto(`${baseUrl}?bpmnFileName=${fileName}`);
 
-        console.info('Waiting for diagram rendering...');
-        // TODO wait for generated element instead of waiting for 1 second (risk of flaky generation, see https://playwright.dev/docs/api/class-page#pagewaitfortimeouttimeout)
-        // we do this in bpmn-visualization tests
-        // we could at least check mxgraph initialization or check the existence of a specific BPMN SVG nodes by looking for its related data-bpmn-id
-        await page.waitForTimeout(1000);
-        console.info('Wait done');
-        // TODO wait for generated element instead of waiting for 1 second (risk of flaky generation, see https://playwright.dev/docs/api/class-page#pagewaitfortimeouttimeout)
-        // we do this in tests (for specific elements, this require data attribute that are not available in all versions or the attribute name changes from version to version
-        // we could at least check mxgraph initialization (svg node in the bpmn-container, but it may not have the same id in all pages)
-        // or check the existence of bpmn svg nodes (probably the easiest way as they will be present for all versions)
-        const checkedBpmnElementId = fileConfiguration?.checkedBpmnElementId;
+        const checkedBpmnElementId = diagramConfiguration?.checkedBpmnElementId;
         console.info(`Waiting for diagram rendering, expected BPMN element '${checkedBpmnElementId}' to be present...`);
         // TODO the 2nd group is not empty (should also be checked in the other tool)
         // #bpmn-container > svg:nth-child(1) > g:nth-child(1) > g:nth-child(2)
