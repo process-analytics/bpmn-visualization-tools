@@ -66,8 +66,6 @@ const baseUrl = 'localhost:5173/index.html';
 
 // playwright default
 const defaultViewPort = { width: 1280, height: 720 };
-// other
-// const defaultViewPort = { width: 1024, height: 768 };
 
 (async () => {
     const browser = await chromium.launch({headless: false});
