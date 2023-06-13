@@ -39,14 +39,21 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // TODO temp to configure the viewport for each file
-const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
+const diagrams = ['A.3.0'];
+// const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
 // TODO we currently use an arbitrary load configuration for fit. See if we need to configure it for each file and diagram
 // TODO for files that contain several diagrams, need to list diagram index, dedicated viewport
 const configuration = new Map<string, Configuration>([
+    ['A.1.0', {viewport: {width: 771, height: 111}}],
+    ['A.2.0', {viewport: {width: 810, height: 343}}],
+    // ['A.2.1', {viewport: {width: 810, height: 343}}],
+    ['A.3.0', {viewport: {width: 770, height: 440}}],
     ['B.2.0', {viewport: {width: 2078, height: 1616}}],
+    // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.4.0', {diagramsNumber: 4}],
+    // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.5.0', {diagramsNumber: 2}],
 ]);
 
