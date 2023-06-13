@@ -39,7 +39,7 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // TODO temp to configure the viewport for each file
-const diagrams = ['C.8.0'];
+const diagrams = ['A.4.1'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -48,12 +48,11 @@ const diagrams = ['C.8.0'];
 const configuration = new Map<string, Configuration>([
     ['A.1.0', {viewport: {width: 771, height: 111}}],
     ['A.2.0', {viewport: {width: 810, height: 343}}],
-    // ['A.2.1', {viewport: {width: 810, height: 343}}],
     ['A.3.0', {viewport: {width: 770, height: 440}}],
-    // ['A.4.0', {viewport: {width: 810, height: 343}}],
-    // ['A.4.1', {viewport: {width: 810, height: 343}}],
+    ['A.4.0', {viewport: {width: 1222, height: 807}}],
+    ['A.4.1', {viewport: {width: 1284, height: 1037}}],
     // ['B.1.0', {viewport: {width: 2078, height: 1616}}],
-    ['B.2.0', {viewport: {width: 2078, height: 1616}}],
+    ['B.2.0', {viewport: {width: 2078, height: 1616}}],  // TODO keep ratio but reduce size? Review ref dimension
     // ['C.1.0', {viewport: {width: 771, height: 111}}],
     // ['C.2.0', {viewport: {width: 771, height: 111}}],
     // ['C.3.0', {viewport: {width: 771, height: 111}}],
@@ -61,9 +60,9 @@ const configuration = new Map<string, Configuration>([
     ['C.4.0', {diagramsNumber: 4}],
     // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.5.0', {diagramsNumber: 2}],
-    // ['C.6.0', {viewport: {width: 771, height: 111}}],
+    ['C.6.0', {viewport: {width: 2081, height: 942}}], // TODO keep ratio but reduce size?
     // ['C.7.0', {viewport: {width: 771, height: 111}}],
-    ['C.8.0', {viewport: {width: 2158, height: 850}}],
+    ['C.8.0', {viewport: {width: 2158, height: 850}}],  // TODO keep ratio but reduce size?
     // ['C.8.1', {viewport: {width: 771, height: 111}}],
 ]);
 
@@ -71,6 +70,8 @@ const baseUrl = 'localhost:5173/index.html';
 
 // playwright default
 const defaultViewPort = { width: 1280, height: 720 };
+// other
+// const defaultViewPort = { width: 1024, height: 768 };
 
 (async () => {
     const browser = await chromium.launch({headless: false});
