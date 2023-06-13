@@ -54,8 +54,8 @@ const configuration = new Map<string, Configuration>([
     // ['C.1.0', {}], // no need for config
     // ['C.2.0', {}], // no need for config
     // ['C.3.0', {}], // no need for config
-    ['C.4.0', {diagramsNumber: 4}],  // no need for viewport
-    ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}],  // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
+    ['C.4.0', {diagramsNumber: 4, viewport: {width: 2240, height: 800}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
+    ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.6.0', {viewport: {width: 2081, height: 942}}],
     // ['C.7.0', {}], // no need for config
     ['C.8.0', {viewport: {width: 2158, height: 850}}],
