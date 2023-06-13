@@ -46,7 +46,6 @@ const diagrams = fs.readdirSync('public')
 // const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
-
 // configuration stores viewport
 const configuration = new Map<string, Configuration>([
     ['A.1.0', {viewport: {width: 771, height: 111}}],
