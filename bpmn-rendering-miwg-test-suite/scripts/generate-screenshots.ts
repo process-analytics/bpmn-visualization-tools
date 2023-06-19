@@ -43,7 +43,7 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-const diagrams = ['C.6.0'];
+const diagrams = ['C.5.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -97,7 +97,10 @@ const configuration = new Map<string, Configuration>([
         checkedBpmnElementId: '_f9e3cd76-809a-48b5-be1c-e84fc4324268', // 'Contract terms accepted ?"
         viewport: {width: 2240, height: 800}
     }],
-    ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
+    ['C.5.0', {diagramsNumber: 2,
+        //  configuration only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
+        checkedBpmnElementId: '_05a1a66a-9308-41c7-a611-4fc57627a058', // End business relation
+        viewport: {width: 3821, height: 984}}],
     ['C.6.0', {
         checkedBpmnElementId: '_b595ec43-0769-4864-8f2e-403c405c8217', // Book Hotel
         viewport: {width: 2081, height: 942}
