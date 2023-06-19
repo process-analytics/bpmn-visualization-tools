@@ -43,7 +43,7 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-const diagrams = ['B.1.0'];
+const diagrams = ['C.1.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -79,7 +79,9 @@ const configuration = new Map<string, Configuration>([
         checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9', // Collapsed Call Activity
         viewport: {width: 1926, height: 1413}
     }],
-    // ['C.1.0', {}], // no need for config
+    ['C.1.0', {
+        checkedBpmnElementId: 'sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF', // Scan Invoice
+    }],
     // ['C.2.0', {}], // no need for config
     // ['C.3.0', {}], // no need for config
     ['C.4.0', {diagramsNumber: 4, viewport: {width: 2240, height: 800}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
