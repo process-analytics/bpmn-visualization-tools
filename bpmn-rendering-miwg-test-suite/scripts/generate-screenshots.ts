@@ -102,7 +102,7 @@ const defaultViewPort = { width: 1280, height: 720 };
         // locator.elementHandle: Error: strict mode violation: locator('#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=_1237e756-d53c-4591-a731-dafffbf0b3f9]') resolved to 2 elements:
         //     1) <g transform="translate(0.5,0.5)" class="bpmn-type-…>…</g> aka locator('g:nth-child(101)')
         //     2) <g data-bpmn-id="_1237e756-d53c-4591-a731-dafffbf0b…>…</g> aka locator('g').filter({ hasText: 'Collapsed Call Activity' }).nth(2)
-        await page.locator(`#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=${checkedBpmnElementId}]:not(.bpmn-label)`).elementHandle({timeout: 3_000});
+        await page.locator(`#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=${checkedBpmnElementId}]:not(.bpmn-label)`).elementHandle({timeout: 2_000});
         console.info('Found BPMN element');
 
         // https://playwright.dev/docs/screenshots
