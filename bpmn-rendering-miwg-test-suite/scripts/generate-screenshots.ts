@@ -39,11 +39,11 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 
 
 // list files from the public directory
-// const diagrams = fs.readdirSync('public')
-//     .filter(file => file.endsWith('.bpmn'))
-//     .map(file => file.substring(0, file.indexOf('.bpmn')));
+const diagrams = fs.readdirSync('public')
+    .filter(file => file.endsWith('.bpmn'))
+    .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-const diagrams = ['C.5.0'];
+// const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
