@@ -43,7 +43,7 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-const diagrams = ['C.4.0'];
+const diagrams = ['C.8.1'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -101,7 +101,10 @@ const configuration = new Map<string, Configuration>([
     ['C.6.0', {viewport: {width: 2081, height: 942}}],
     // ['C.7.0', {}], // no need for config
     ['C.8.0', {viewport: {width: 2158, height: 850}}],
-    ['C.8.1', {viewport: {width: 1920, height: 800}}],
+    ['C.8.1', {
+        checkedBpmnElementId: '_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32', // Vacation Approval
+        viewport: {width: 1920, height: 800}
+    }],
 ]);
 
 const baseUrl = 'localhost:5173/index.html';
