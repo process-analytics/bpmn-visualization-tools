@@ -39,11 +39,11 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 
 
 // list files from the public directory
-const diagrams = fs.readdirSync('public')
-    .filter(file => file.endsWith('.bpmn'))
-    .map(file => file.substring(0, file.indexOf('.bpmn')));
+// const diagrams = fs.readdirSync('public')
+//     .filter(file => file.endsWith('.bpmn'))
+//     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-// const diagrams = ['B.2.0'];
+const diagrams = ['B.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -55,8 +55,7 @@ const configuration = new Map<string, Configuration>([
     ['A.4.1', {viewport: {width: 1284, height: 1037}}],
     ['B.1.0', {viewport: {width: 1103, height: 1011}}],
     ['B.2.0', {
-        // TODO this should fail (added an 'X' character at the end of the id)
-        checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9X', // Collapsed Call Activity
+        checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9', // Collapsed Call Activity
         viewport: {width: 1926, height: 1413}
     }],
     // ['C.1.0', {}], // no need for config
@@ -75,13 +74,6 @@ const baseUrl = 'localhost:5173/index.html';
 // playwright default
 const defaultViewPort = { width: 1280, height: 720 };
 
-
-// private findSvgElement(bpmnId: string): HTMLElement {
-//     const bpmnElements = this.bpmnVisualization.bpmnElementsRegistry.getElementsByIds(bpmnId);
-//     return bpmnElements.length == 0 ? undefined : bpmnElements[0].htmlElement;
-// }
-
-
 (async () => {
     const browser = await chromium.launch({headless: false});
     const page = await browser.newPage();
@@ -98,13 +90,13 @@ const defaultViewPort = { width: 1280, height: 720 };
 
         const checkedBpmnElementId = diagramConfiguration?.checkedBpmnElementId;
         console.info(`Waiting for diagram rendering, expected BPMN element '${checkedBpmnElementId}' to be present...`);
-        // TODO the 2nd group is not empty (should also be checked in the other tool)
-        // #bpmn-container > svg:nth-child(1) > g:nth-child(1) > g:nth-child(2)
-        // TODO this doesn't do a check, test "pw test library" with expect
         // await expect(page.locator..).toBeVisible()
-        await page.locator(`#bpmn-container svg2 g g:nth-child(2) g[data-bpmn-id=${checkedBpmnElementId}]`);
-        // await page.waitForTimeout(1000);
-        // console.info('Wait done');
+        // workaround to wait for the locator to be available https://github.com/microsoft/playwright/issues/9179#issuecomment-928549627
+        // There are 2 SVG elements, one for the shape and one for the label. Exclude the element related to the label (it is identified with a bpmn-label CSS class). Otherwise, playwright complains
+        // locator.elementHandle: Error: strict mode violation: locator('#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=_1237e756-d53c-4591-a731-dafffbf0b3f9]') resolved to 2 elements:
+        //     1) <g transform="translate(0.5,0.5)" class="bpmn-type-…>…</g> aka locator('g:nth-child(101)')
+        //     2) <g data-bpmn-id="_1237e756-d53c-4591-a731-dafffbf0b…>…</g> aka locator('g').filter({ hasText: 'Collapsed Call Activity' }).nth(2)
+        await page.locator(`#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=${checkedBpmnElementId}]:not(.bpmn-label)`).elementHandle({timeout: 3_000});
         console.info('Found BPMN element');
 
         // https://playwright.dev/docs/screenshots
