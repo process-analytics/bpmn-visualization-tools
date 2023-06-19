@@ -19,6 +19,10 @@ import {chromium} from 'playwright-chromium';
 
 type Configuration = {
     /**
+     * The id of the BPMN element present in the diagram that is used to detect that the diagram has been rendered.
+     */
+    checkedBpmnElementId?: string;
+    /**
      * Number of diagrams in the file that needs to be exported.
      * Currently, only export the first one and postfix the screenshot file name with a number.
      * It will change with https://github.com/process-analytics/bpmn-visualization-js/issues/729
@@ -44,22 +48,74 @@ const diagrams = fs.readdirSync('public')
 
 // configuration stores viewport
 const configuration = new Map<string, Configuration>([
-    ['A.1.0', {viewport: {width: 771, height: 111}}],
-    ['A.2.0', {viewport: {width: 810, height: 343}}],
-    ['A.3.0', {viewport: {width: 770, height: 440}}],
-    ['A.4.0', {viewport: {width: 1222, height: 807}}],
-    ['A.4.1', {viewport: {width: 1284, height: 1037}}],
-    ['B.1.0', {viewport: {width: 1103, height: 1011}}],
-    ['B.2.0', {viewport: {width: 1926, height: 1413}}],
-    // ['C.1.0', {}], // no need for config
-    // ['C.2.0', {}], // no need for config
-    // ['C.3.0', {}], // no need for config
-    ['C.4.0', {diagramsNumber: 4, viewport: {width: 2240, height: 800}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
-    ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
-    ['C.6.0', {viewport: {width: 2081, height: 942}}],
-    // ['C.7.0', {}], // no need for config
-    ['C.8.0', {viewport: {width: 2158, height: 850}}],
-    ['C.8.1', {viewport: {width: 1920, height: 800}}],
+    ['A.1.0', {
+        checkedBpmnElementId: '_e70a6fcb-913c-4a7b-a65d-e83adc73d69c', // Task 3
+        viewport: {width: 771, height: 111}
+    }],
+    ['A.2.0', {
+        checkedBpmnElementId: '_258f51eb-b764-4a71-b681-3a01cca14143', // End Event
+        viewport: {width: 810, height: 343}
+    }],
+    ['A.2.1', {
+        checkedBpmnElementId: ' _To9Z2TOCEeSknpIVFCxNIQ', // Gateway&#10;(Merge Flows)
+    }],
+    ['A.3.0', {
+        checkedBpmnElementId: '_1ac4b759-40e3-4dfb-b0e3-ad1d201d6c3d', // sequence flow
+        viewport: {width: 770, height: 440}
+    }],
+    ['A.4.0', {
+        checkedBpmnElementId: '_ee35fa2c-dfea-40cf-a469-845b765a7b50', // Expanded Sub-Process 1
+        viewport: {width: 1222, height: 807}
+    }],
+    ['A.4.1', {
+        checkedBpmnElementId: 'sid-70D2F83B-77E6-4301-835C-AFF6357344F8', // Start Event 1
+        viewport: {width: 1284, height: 1037}
+    }],
+    ['B.1.0', {
+        checkedBpmnElementId: '_bd04180e-49f6-4cf0-a7d6-da59e2840b4b', // Group
+        viewport: {width: 1103, height: 1011}
+    }],
+    ['B.2.0', {
+        checkedBpmnElementId: '_1237e756-d53c-4591-a731-dafffbf0b3f9', // Collapsed Call Activity
+        viewport: {width: 1926, height: 1413}
+    }],
+    ['C.1.0', {
+        checkedBpmnElementId: 'sid-05039C4F-59F7-4CBD-8C84-D35E27C7B5EF', // Scan Invoice
+    }],
+    ['C.1.1', {
+        checkedBpmnElementId: 'invoice_approved', // Invoice Approved (Gateway)
+    }],
+    ['C.2.0', {
+        checkedBpmnElementId: '_2f24e6da-b44f-4e30-8d85-fd35fd56e209', // Pay Order
+    }],
+    ['C.3.0', {
+        checkedBpmnElementId: '_a92069f7-377b-4dbd-a1fd-1da071aabf6d', // Replace fridge
+    }],
+    ['C.4.0', {
+        diagramsNumber: 4,
+        //  configuration only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
+        checkedBpmnElementId: '_f9e3cd76-809a-48b5-be1c-e84fc4324268', // 'Contract terms accepted ?"
+        viewport: {width: 2240, height: 800}
+    }],
+    ['C.5.0', {diagramsNumber: 2,
+        //  configuration only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
+        checkedBpmnElementId: '_05a1a66a-9308-41c7-a611-4fc57627a058', // End business relation
+        viewport: {width: 3821, height: 984}}],
+    ['C.6.0', {
+        checkedBpmnElementId: '_b595ec43-0769-4864-8f2e-403c405c8217', // Book Hotel
+        viewport: {width: 2081, height: 942}
+    }],
+    ['C.7.0', {
+        checkedBpmnElementId: '_64eabfe9-6947-43eb-ac45-8d331745f86c', // Publish on &#10;homepage
+    }],
+    ['C.8.0', {
+        checkedBpmnElementId: '_a97c1a48-faba-447b-bfa6-7aa81a6fe0a0', // Notify Employee of Approval
+        viewport: {width: 2158, height: 850}
+    }],
+    ['C.8.1', {
+        checkedBpmnElementId: '_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32', // Vacation Approval
+        viewport: {width: 1920, height: 800}
+    }],
 ]);
 
 const baseUrl = 'localhost:5173/index.html';
@@ -81,12 +137,16 @@ const defaultViewPort = { width: 1280, height: 720 };
 
         await page.goto(`${baseUrl}?bpmnFileName=${fileName}`);
 
-        console.info('Waiting for diagram rendering...');
-        // TODO wait for generated element instead of waiting for 1 second (risk of flaky generation, see https://playwright.dev/docs/api/class-page#pagewaitfortimeouttimeout)
-        // we do this in bpmn-visualization tests
-        // we could at least check mxgraph initialization or check the existence of a specific BPMN SVG nodes by looking for its related data-bpmn-id
-        await page.waitForTimeout(1000);
-        console.info('Wait done');
+        const checkedBpmnElementId = diagramConfiguration?.checkedBpmnElementId;
+        console.info(`Waiting for diagram rendering, expected BPMN element '${checkedBpmnElementId}' to be present...`);
+        // await expect(page.locator..).toBeVisible()
+        // workaround to wait for the locator to be available https://github.com/microsoft/playwright/issues/9179#issuecomment-928549627
+        // There are 2 SVG elements, one for the shape and one for the label. Exclude the element related to the label (it is identified with a bpmn-label CSS class). Otherwise, playwright complains
+        // locator.elementHandle: Error: strict mode violation: locator('#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=_1237e756-d53c-4591-a731-dafffbf0b3f9]') resolved to 2 elements:
+        //     1) <g transform="translate(0.5,0.5)" class="bpmn-type-…>…</g> aka locator('g:nth-child(101)')
+        //     2) <g data-bpmn-id="_1237e756-d53c-4591-a731-dafffbf0b…>…</g> aka locator('g').filter({ hasText: 'Collapsed Call Activity' }).nth(2)
+        await page.locator(`#bpmn-container svg g g:nth-child(2) g[data-bpmn-id=${checkedBpmnElementId}]:not(.bpmn-label)`).elementHandle({timeout: 2_000});
+        console.info('Found BPMN element');
 
         // https://playwright.dev/docs/screenshots
         // TODO ensure no fullPage, configure css to make fitCenter work or configure viewport for each file
