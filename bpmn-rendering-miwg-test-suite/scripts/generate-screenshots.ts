@@ -43,7 +43,7 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-const diagrams = ['A.2.1'];
+const diagrams = ['A.3.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -59,7 +59,10 @@ const configuration = new Map<string, Configuration>([
     ['A.2.1', {
         checkedBpmnElementId: ' _To9Z2TOCEeSknpIVFCxNIQ', // Gateway&#10;(Merge Flows)
     }],
-    ['A.3.0', {viewport: {width: 770, height: 440}}],
+    ['A.3.0', {
+        checkedBpmnElementId: '_1ac4b759-40e3-4dfb-b0e3-ad1d201d6c3d', // sequence flow
+        viewport: {width: 770, height: 440}
+    }],
     ['A.4.0', {viewport: {width: 1222, height: 807}}],
     ['A.4.1', {viewport: {width: 1284, height: 1037}}],
     ['B.1.0', {viewport: {width: 1103, height: 1011}}],
