@@ -43,7 +43,7 @@ fs.mkdirSync(outputDirectory, {recursive: true});
 //     .filter(file => file.endsWith('.bpmn'))
 //     .map(file => file.substring(0, file.indexOf('.bpmn')));
 // Use this to check a dedicated diagram
-const diagrams = ['C.1.1'];
+const diagrams = ['C.2.0'];
 // const diagrams = ['A.1.0', 'B.2.0', 'C.4.0'];
 
 // configuration stores viewport
@@ -85,7 +85,9 @@ const configuration = new Map<string, Configuration>([
     ['C.1.1', {
         checkedBpmnElementId: 'invoice_approved', // Invoice Approved (Gateway)
     }],
-    // ['C.2.0', {}], // no need for config
+    ['C.2.0', {
+        checkedBpmnElementId: '_2f24e6da-b44f-4e30-8d85-fd35fd56e209', // Pay Order
+    }],
     // ['C.3.0', {}], // no need for config
     ['C.4.0', {diagramsNumber: 4, viewport: {width: 2240, height: 800}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
     ['C.5.0', {diagramsNumber: 2, viewport: {width: 3821, height: 984}}], // viewport only for the first diagram (other viewports will be configured later when we support the rendering of more diagrams)
