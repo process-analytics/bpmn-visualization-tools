@@ -21,7 +21,7 @@ screenshots.
 
 ### Prerequisites
 
-Node 16
+`node.js`: see [.nvmrc](./.nvmrc). `nvm` users can run `nvm use`.
 
 Run `npm install`
 
