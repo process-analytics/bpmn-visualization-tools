@@ -8,16 +8,16 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "preview": "vite preview",
-    "copy-ref-bpmn": "ts-node --esm scripts/copy-reference-bpmn-files.ts",
-    "generate-screenshots": "ts-node --esm scripts/generate-screenshots.ts"
+    "copy-ref-bpmn": "node --loader ts-node/esm scripts/copy-reference-bpmn-files.ts",
+    "generate-screenshots": "node --loader ts-node/esm scripts/generate-screenshots.ts"
   },
   "dependencies": {
     "bpmn-visualization": "0.44.0"
   },
   "devDependencies": {
-    "playwright-chromium": "~1.38.1",
-    "ts-node": "~10.9.1",
-    "typescript": "~5.2.2",
-    "vite": "~4.5.5"
+    "playwright-chromium": "~1.52.0",
+    "ts-node": "~10.9.2",
+    "typescript": "~5.8.3",
+    "vite": "~6.3.5"
   }
 }
