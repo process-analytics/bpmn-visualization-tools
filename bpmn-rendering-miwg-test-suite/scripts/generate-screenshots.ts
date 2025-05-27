@@ -116,6 +116,19 @@ const configuration = new Map<string, Configuration>([
         checkedBpmnElementId: '_1a818a94-ba6f-413b-a7e8-6f8fd2a11e32', // Vacation Approval
         viewport: {width: 1920, height: 800}
     }],
+    // TODO review the viewport of the C.9.x diagrams to match the dimensions of the PNG in the miwg test suite repository
+    ['C.9.0', {
+        checkedBpmnElementId: 'ServiceTask_CancelApplication', // Cancel application
+        viewport: {width: 1920, height: 800}
+    }],
+    ['C.9.1', {
+        checkedBpmnElementId: 'UserTask_CallCustomer', // Call customer
+        viewport: {width: 1920, height: 800}
+    }],
+    ['C.9.2', {
+        checkedBpmnElementId: 'StartTimerEvent_AcceleratedDecision', // Accelerated decision
+        viewport: {width: 1920, height: 800}
+    }],
 ]);
 
 const baseUrl = 'localhost:5173/index.html';
@@ -131,6 +144,10 @@ const defaultViewPort = { width: 1280, height: 720 };
         console.info('Processing file', fileName);
 
         const diagramConfiguration = configuration.get(fileName);
+        if (!diagramConfiguration) {
+            console.warn(`No configuration found for file ${fileName}, skipping.`);
+            continue;
+        }
         const viewPort = diagramConfiguration?.viewport ?? defaultViewPort;
         console.info('viewport:', viewPort);
         await page.setViewportSize(viewPort);
