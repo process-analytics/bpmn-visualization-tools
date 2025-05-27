@@ -27,7 +27,7 @@ Run `npm install`
 
 ### How-to
 
-Start a http server on port `8002`, for instance, by running one of the following commands
+Start an HTTP server on port `8002`, for instance, by running one of the following commands
 - `python3 -m http.server 8002`
 - `npx http-server --port 8002`
 
