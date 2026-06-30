@@ -1,0 +1,37 @@
+name: Build MIWG Test Suite
+
+on:
+  push:
+    branches:
+      - main
+    paths:
+      - 'bpmn-rendering-miwg-test-suite/**'
+      - '.github/workflows/build-miwg-test-suite.yml'
+  pull_request:
+    paths:
+      - 'bpmn-rendering-miwg-test-suite/**'
+      - '.github/workflows/build-miwg-test-suite.yml'
+
+defaults:
+  run:
+    working-directory: bpmn-rendering-miwg-test-suite
+
+jobs:
+  build:
+    runs-on: ubuntu-24.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@9c091bb21b7c1c1d1991bb908d89e4e9dddfe3e0 # v7.0.0
+      - name: Setup Node.js
+        uses: actions/setup-node@48b55a011bda9f5d6aeb4c2d9c7362e8dae4041e # v6.4.0
+        with:
+          node-version-file: bpmn-rendering-miwg-test-suite/.nvmrc
+          cache: npm
+          cache-dependency-path: bpmn-rendering-miwg-test-suite/package-lock.json
+      - name: Install dependencies
+        # The build (tsc && vite build) does not need install scripts. Skipping them avoids the
+        # playwright-chromium postinstall that downloads Chromium and hangs the job. Using --ignore-scripts
+        # instead of PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD keeps this working across playwright version upgrades.
+        run: npm ci --ignore-scripts
+      - name: Build
+        run: npm run build
