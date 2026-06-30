@@ -29,6 +29,10 @@ jobs:
           cache: npm
           cache-dependency-path: bpmn-rendering-miwg-test-suite/package-lock.json
       - name: Install dependencies
+        # The build (tsc && vite build) does not need a browser; only the generate-screenshots script does.
+        # Skip the Chromium download so npm ci does not hang on the playwright-chromium postinstall.
+        env:
+          PLAYWRIGHT_SKIP_BROWSER_DOWNLOAD: 1
         run: npm ci
       - name: Build
         run: npm run build
